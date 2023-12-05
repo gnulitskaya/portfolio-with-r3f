@@ -1,10 +1,19 @@
 import { useGLTF, Environment, Float, 
     PresentationControls, ContactShadows, Html, Text } from '@react-three/drei'
 
+import { useState, useRef } from 'react'
+import Mac from './Mac';
+import Model from './Model';
+import { useSpring } from "@react-spring/core";
+
 export default function Experience()
 {
-    const computer = useGLTF('https://threejs-journey.com/resources/models/macbook_model.gltf');
-    console.log(computer);
+    // const computer = useGLTF('https://threejs-journey.com/resources/models/macbook_model.gltf');
+    // This flag controls open state, alternates between true & false
+    const [open, setOpen] = useState(false);
+    const laptopRef = useRef(null);
+    const props = useSpring({ open: Number(open) });
+    // console.log(computer);
     return <>
 
         <Environment preset='city'/>
@@ -29,25 +38,13 @@ export default function Experience()
                 rotation={ [ - 0.1, Math.PI, 0 ] }
                 position={ [ 0, 0.55, - 1.15 ] }
             />
-                <primitive 
-                object={computer.scene}
-                position-y={-1.2} >
-                    <Html transform
-                    wrapperClass='htmlScreen'
-                    distanceFactor={1.17}
-                    position={[0, 1.56, -1.4]}
-                    rotation-x={-0.256}>
-                        <iframe src='http://gnulitskaya.ru/' />
-                    </Html>
-                </primitive>
-
-                {/* <Text
-                fontSize={0.6}
-                position={[2, 0.75, 0.75]}
-                rotation-y={-1.25}
-                maxWidth={2}
-                textAlign='center'
-                >PORTFOLIO</Text> */}
+            <group
+                position-y={-0.1}
+                onClick={(e) => (e.stopPropagation(), setOpen(!open))}
+            >
+                <Mac scale={0.3} open={open} hinge={props.open.to([0, 1], [1.575, -0.425])}/>
+                {/* <Model open={open}/> */}
+            </group>
             </Float> 
         </PresentationControls>
 
