@@ -2,10 +2,11 @@ import {
     useGLTF, Environment, Float,
     PresentationControls, ContactShadows, Html, Text
 } from '@react-three/drei'
-
+import * as THREE from "three";
 import { useState, useRef } from 'react'
 import { a as three } from "@react-spring/three";
 import { a as web } from "@react-spring/web";
+import { Canvas, useFrame } from "@react-three/fiber";
 
 export default function Mac({ open, hinge, ...props }) {
     const group = useRef()
@@ -13,6 +14,30 @@ export default function Mac({ open, hinge, ...props }) {
     const { nodes, materials } = useGLTF("./mac-draco.glb");
     // This flag controls open state, alternates between true & false
     console.log(nodes);
+    useFrame((state) => {
+        const t = state.clock.getElapsedTime();
+        // group.current.rotation.x = THREE.MathUtils.lerp(
+        //     group.current.rotation.x,
+        //     open ? Math.cos(t / 10) / 10 + 0.05 : 0,
+        //     0.1,
+        // );
+        group.current.rotation.y = THREE.MathUtils.lerp(
+            group.current.rotation.y,
+            open ? -0.6 : 0.1,
+            0.1,
+        );
+        // group.current.rotation.z = THREE.MathUtils.lerp(
+        //     group.current.rotation.z,
+        //     open ? Math.sin(t / 10) / 10 : 0,
+        //     0.1,
+        // );
+        // group.current.position.y = THREE.MathUtils.lerp(
+        //     group.current.position.y,
+        //     open ? (-2 + Math.sin(t)) / 3 : -4.3,
+        //     0.1,
+        // );
+    });
+
     return <>
 
         {/* <primitive 
@@ -32,6 +57,7 @@ export default function Mac({ open, hinge, ...props }) {
             ref={group}
             {...props}
             dispose={null}
+
         >
             <three.group rotation-x={hinge} position={[0, -0.04, 0.41]}>
                 <group position={[0, 2.96, -0.13]} rotation={[Math.PI / 2, 0, 0]}>
