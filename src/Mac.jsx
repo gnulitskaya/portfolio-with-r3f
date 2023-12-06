@@ -7,7 +7,7 @@ import { useState, useRef } from 'react'
 import { a as three } from "@react-spring/three";
 import { a as web } from "@react-spring/web";
 
-export default function Mac({open, hinge, ...props}) {
+export default function Mac({ open, hinge, ...props }) {
     const group = useRef()
     // const computer = useGLTF('https://threejs-journey.com/resources/models/macbook_model.gltf');
     const { nodes, materials } = useGLTF("./mac-draco.glb");
@@ -35,13 +35,15 @@ export default function Mac({open, hinge, ...props}) {
         >
             <three.group rotation-x={hinge} position={[0, -0.04, 0.41]}>
                 <group position={[0, 2.96, -0.13]} rotation={[Math.PI / 2, 0, 0]}>
-                {/* <Html transform
-                        wrapperClass='htmlScreen'
-                        distanceFactor={1.9}
-                        position={[0, 0, -1.9]}
+
+                    <Html transform
+                        wrapperClass={open ? "htmlScreen" : "hidden"}
+                        distanceFactor={3.3}
+                        position={[0, 0, -0.1]}
                         rotation-x={-1.56}>
                         <iframe src='http://gnulitskaya.ru/' />
-                    </Html> */}
+                    </Html>
+
                     <mesh
                         material={materials.aluminium}
                         geometry={nodes["Cube008"].geometry}

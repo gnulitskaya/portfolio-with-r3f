@@ -18,7 +18,7 @@ export default function Experience()
 
         <Environment preset='city'/>
 
-        <color args={['#111111']} attach="background"/>
+        <color args={[open ? '#983D75' : '#8395CD']} attach="background"/>
 
         {/* <OrbitControls makeDefault /> */}
         <PresentationControls global
@@ -49,9 +49,9 @@ export default function Experience()
         </PresentationControls>
 
         <ContactShadows position-y={-1.4}
-        opacity={0.4}
+        opacity={0.3}
         scale={5}
-        blur={2.4}/>
+        blur={3}/>
 
     </>
 }
